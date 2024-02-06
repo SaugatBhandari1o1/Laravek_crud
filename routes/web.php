@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\informationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,30 +14,22 @@ use App\Http\Controllers\informationController;
 |
 */
 
-Route::group(["prefix" => 'information', 'as' => 'information.'], function () {
-    Route::get('/', [informationController::class, 'index'])->name('index');
-    Route::get('/view', [informationController::class, 'view'])->name('view');
-    Route::post('/store', [informationController::class, 'store'])->name('store');
-    Route::get('/signup', [informationController::class, 'signup'])->name('signup');
+Route::get('/', function () {
+    return view('login');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::group(["prefix"=> 'information', 'as' => 'information.'], function () {
-//     Route::get('/', [informationController::class,'index'])->name('index');
-//     Route::get('/view', [informationController::class, 'view'])->name('view');
-//     Route::get('/', [informationController::class, 'store'])->name('store');
-// });
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-// Route::get('/', function () {
-//     return view('index');
-// });
-// Route::get('/view', function () {
-//     return view('view');
-// });
+Route::group(['prefix' => 'information', 'as'=>'information'], function () {
 
-// Route::get('/login', function () {
-//     return view('login');
-// });
-// Route::get('/hello', function () {
-//     return response ('');
-// });
+});
+
+require __DIR__.'/auth.php';

@@ -40,7 +40,7 @@
                         </div>
                         <div class="mt-2 mb-2">
                             <label for="docs" class="form-label">Document</label>
-                            <input type="file" id="image_data" name="files[]" accept=".jpeg, .jpg, .png" multiple>
+                            <input type="file" id="image_data" name="image_data" accept=".jpeg, .jpg, .png" >
                         </div>  
                         <hr>
                         <div class="mt-2 mb-2">

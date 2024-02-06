@@ -31,7 +31,9 @@
                             <td>{{$row->education}}</td>
                             <td>{{$row->email}}</td>
                             <td>{{$row->age}}</td>
-                            <td>{{$row->image_data}}</td>
+                            <td>
+                                <img src="{{asset('/uploads/' . $row->image_data)}}" alt="Image" width="100px">
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

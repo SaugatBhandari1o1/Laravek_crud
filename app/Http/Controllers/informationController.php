@@ -18,20 +18,31 @@ class informationController extends Controller
 
     public function store(Request $request)
     {
+        
         $model = new Information();
 
         $model->name = $request->name;
         $model->age = $request->age;
         $model->education = $request->education;
         $model->email = $request->email;
-        $model->image_data = $request->image_data;
         $model->status=$request->status? true:false;
+        // dd($model);
 
+        if($request->hasFile('image_data')){
+            // foreach ($request->file('image_data') as $file)
+            {
+            $file = $request->file('image_data');
+            $image = time() .'.'. $file->getClientOriginalExtension();
+            $destinationPath = 'public_path'('uploads/');
+            $file->move($destinationPath, $image);
+        }
+        $model->image_data=$image;
         $success = $model->save();
         if ($success) {
             return redirect()->route('information.index');
         }
     }
+}
     public function view(){
         return view('view');
     }
@@ -39,3 +50,4 @@ class informationController extends Controller
         return view('signup');
     }
 }
+
